@@ -85,7 +85,7 @@ const App = () => {
         }
         else{
             
-            window.location.href = "http://ourwork.20thfloor.us/SRH/signin";
+            window.location = "http://ourwork.20thfloor.us/SRH/signin";
         }
         window.loaded = true
     }
