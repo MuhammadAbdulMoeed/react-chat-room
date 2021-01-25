@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect , useState}  from 'react';
 import {getGlobal, useGlobal} from 'reactn';
 import {ToastProvider} from 'react-toast-notifications';
 import './App.sass';
@@ -17,16 +17,17 @@ const App = () => {
     const dispatch = useDispatch();
     const {addToast} = useToasts();
     const io = useSelector(state => state.io.io);
-
+    const [loading, setLoading] = useState(true);
     const token = useGlobal('token')[0];
     const setStartingPoint = useGlobal('entryPath')[1];
-
+    setLoading(true);
     const toHome = token && <Redirect to="/"/>;
     const toLogin = !token && <Redirect to="/login"/>;
 
     if (!['dark', 'light'].includes(Config.theme)) Config.theme = 'light';
 
     useEffect(() => {
+        
         if (!io || !getGlobal().user || !token) return;
         let focusCount = 0;
         let interval = setInterval(() => {
@@ -81,6 +82,10 @@ const App = () => {
                     autoDismiss: true,
                 });
             }
+        }
+        else{
+            
+            window.location.href = "http://ourwork.20thfloor.us/SRH/signin";
         }
         window.loaded = true
     }

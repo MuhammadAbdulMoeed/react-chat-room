@@ -38,7 +38,8 @@ const TopBar = () => {
             appearance: 'success',
             autoDismiss: true,
         })
-        history.replace("/login");
+        window.location.href = "http://ourwork.20thfloor.us/SRH/signin";
+        //history.replace("/login");
     };
 
     const errorToast = content => {
