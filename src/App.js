@@ -17,10 +17,10 @@ const App = () => {
     const dispatch = useDispatch();
     const {addToast} = useToasts();
     const io = useSelector(state => state.io.io);
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
     const token = useGlobal('token')[0];
     const setStartingPoint = useGlobal('entryPath')[1];
-    setLoading(true);
+    // setLoading(true);
     const toHome = token && <Redirect to="/"/>;
     const toLogin = !token && <Redirect to="/login"/>;
 
@@ -64,8 +64,10 @@ const App = () => {
         const token = splitPath[2];
         if (route === 'login' && token && token.length > 20) {
             let decoded;
+            console.log(route,token);
             try {
                 decoded = jwtDecode(token);
+                console.log(decoded);
                 if (typeof decoded !== 'object' || typeof decoded.id !== 'string') return;
                 setAuthToken(token);
                 localStorage.setItem('token', token);
@@ -84,7 +86,6 @@ const App = () => {
             }
         }
         else{
-            
             window.location = "http://ourwork.20thfloor.us/SRH/signin";
         }
         window.loaded = true
