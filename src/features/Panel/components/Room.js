@@ -146,9 +146,9 @@ const Room = ({room}) => {
                     <div className="button" type="button">
                         <FiMoreHorizontal/>
                     </div>
-                    <div data-uk-dropdown="mode: click; offset: 5; boundary: .top-bar">
+{/*                     <div data-uk-dropdown="mode: click; offset: 5; boundary: .top-bar">
                         <div className="link" onClick={() => notAvailable('Remove Conversation')}>Remove</div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

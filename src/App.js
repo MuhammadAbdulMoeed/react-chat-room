@@ -1,44 +1,44 @@
-import React, {useEffect , useState}  from 'react';
-import {getGlobal, useGlobal} from 'reactn';
-import {ToastProvider} from 'react-toast-notifications';
+import React, { useEffect, useState } from 'react';
+import { getGlobal, useGlobal } from 'reactn';
+import { ToastProvider } from 'react-toast-notifications';
 import './App.sass';
-import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Config from './config';
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import jwtDecode from 'jwt-decode';
 import setAuthToken from "./actions/setAuthToken";
 import initIO from "./actions/initIO";
-import {setGlobal} from "reactn";
-import {useToasts} from "react-toast-notifications";
+import { setGlobal } from "reactn";
+import { useToasts } from "react-toast-notifications";
 
 const App = () => {
     const dispatch = useDispatch();
-    const {addToast} = useToasts();
+    const { addToast } = useToasts();
     const io = useSelector(state => state.io.io);
-    // const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
     const token = useGlobal('token')[0];
     const setStartingPoint = useGlobal('entryPath')[1];
     // setLoading(true);
-    const toHome = token && <Redirect to="/"/>;
-    const toLogin = !token && <Redirect to="/login"/>;
+    const toHome = token && <Redirect to="/" />;
+    const toLogin = !token && <Redirect to="/login" />;
 
     if (!['dark', 'light'].includes(Config.theme)) Config.theme = 'light';
 
     useEffect(() => {
-        
+
         if (!io || !getGlobal().user || !token) return;
         let focusCount = 0;
         let interval = setInterval(() => {
             if (!document.hasFocus()) {
                 focusCount++;
                 if (focusCount === 10) {
-                    io.emit('status', {status: 'away'});
+                    io.emit('status', { status: 'away' });
                 }
             } else if (focusCount !== 0) {
                 focusCount = 0;
-                io.emit('status', {status: 'online'});
+                io.emit('status', { status: 'online' });
             }
         }, 1000);
         return () => clearInterval(interval);
@@ -63,8 +63,9 @@ const App = () => {
         const route = splitPath[1];
         const token = splitPath[2];
         if (route === 'login' && token && token.length > 20) {
+            setLoading(false);
             let decoded;
-            console.log(route,token);
+            console.log(route, token);
             try {
                 decoded = jwtDecode(token);
                 console.log(decoded);
@@ -85,27 +86,27 @@ const App = () => {
                 });
             }
         }
-        else{
+        else {
             window.location = "http://ourwork.20thfloor.us/SRH/signin";
         }
         window.loaded = true
     }
 
     return (
-        <div className={`theme ${Config.theme}`}>
+        loading ? <div className={`theme ${Config.theme}`}>
             <Router>
                 <Switch>
                     <Route path="/login">
                         {toHome}
-                        {!toHome && <Login/>}
+                        {!toHome && <Login />}
                     </Route>
                     <Route path="/">
                         {toLogin}
-                        {!toLogin && <Home/>}
+                        {!toLogin && <Home />}
                     </Route>
                 </Switch>
             </Router>
-        </div>
+        </div> : <div />
     );
 }
 
