@@ -86,7 +86,7 @@ const App = () => {
                 });
             }
         }
-        else {
+        else if(route === 'login'){
             window.location = "http://ourwork.20thfloor.us/SRH/signin";
         }
         window.loaded = true
