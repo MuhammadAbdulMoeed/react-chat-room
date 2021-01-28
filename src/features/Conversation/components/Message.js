@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import moment from "moment";
 import './Message.sass';
 import emojiRegex from 'emoji-regex/text';
 import Config from "../../../config";
-import {useGlobal} from "reactn";
+import { useGlobal } from "reactn";
 import ReactImageAppear from 'react-image-appear';
-import {FiDownloadCloud} from "react-icons/fi";
+import { FiDownloadCloud } from "react-icons/fi";
 import striptags from "striptags";
 
-const Message = ({message, previous, next, onOpen}) => {
+const Message = ({ message, previous, next, onOpen }) => {
     let { author, content, date } = message;
 
     const user = useGlobal('user')[0];
@@ -21,19 +21,21 @@ const Message = ({message, previous, next, onOpen}) => {
 
     let attachPrevious = false, attachNext = false;
 
-    if (previous && Math.abs(moment(previous.date).diff(moment(date), 'minutes')) < 3  && author._id === previous.author._id)
+    if (previous && Math.abs(moment(previous.date).diff(moment(date), 'minutes')) < 3 && author._id === previous.author._id)
         attachPrevious = true;
     if (next && Math.abs(moment(next.date).diff(moment(date), 'minutes')) < 3 && author._id === next.author._id)
         attachNext = true;
 
-    const Picture = ({user}) => {
+    const Picture = ({ user }) => {
         if (user.picture)
             return <img src={`${Config.url || ''}/api/images/${user.picture.shieldedID}/256`} alt="Picture" />;
+        else if (user.logo)
+            return <img src={user.logo} alt="Picture" />;
         else
-            return <div className="img">{user.firstName.substr(0,1)}{user.lastName.substr(0,1)}</div>;
+            return <div className="img">{user.firstName.substr(0, 1)}{user.lastName.substr(0, 1)}</div>;
     };
 
-    const Details = ({side}) => {
+    const Details = ({ side }) => {
         if (!attachNext) return (
             <div className={`message-details ${side}`}>
                 {moment(date).format('MMM DD - h:mm A')}
@@ -43,7 +45,7 @@ const Message = ({message, previous, next, onOpen}) => {
     };
 
     const PictureOrSpacer = () => {
-        if (attachPrevious) return <div className="spacer"/>;
+        if (attachPrevious) return <div className="spacer" />;
         else return (
             <div className="picture">
                 <Picture user={author} />
@@ -63,8 +65,8 @@ const Message = ({message, previous, next, onOpen}) => {
     };
 
     const convertUrls = text => {
-        const urlRegex =/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-        return text.replace(urlRegex, function(url) {
+        const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+        return text.replace(urlRegex, function (url) {
             return '<a href="' + url + '" target="_blank">' + url + '</a>';
         });
     };
@@ -85,14 +87,14 @@ const Message = ({message, previous, next, onOpen}) => {
                         <div className="content-download">
                             <div className="content-file">
                                 <div className="content-name">{message.file ? message.file.name : 'File'}</div>
-                                <div className="content-size">{message.file ? Math.round(message.file.size / 1024 / 1024 * 10 ) / 10 + ' MB' : 'Size'}</div>
+                                <div className="content-size">{message.file ? Math.round(message.file.size / 1024 / 1024 * 10) / 10 + ' MB' : 'Size'}</div>
                             </div>
-                            <div className="content-icon"><FiDownloadCloud/></div>
+                            <div className="content-icon"><FiDownloadCloud /></div>
                         </div>
                     </a>
                 );
             default:
-                return <div dangerouslySetInnerHTML={{__html: convertUrls(striptags(content, [ 'a', 'strong', 'b', 'i', 'em', 'u', 'br' ]))}} />
+                return <div dangerouslySetInnerHTML={{ __html: convertUrls(striptags(content, ['a', 'strong', 'b', 'i', 'em', 'u', 'br'])) }} />
         }
     };
 
@@ -103,10 +105,10 @@ const Message = ({message, previous, next, onOpen}) => {
 
     return (
         <div className={`message${isMine ? ' right' : ' left'}${attachPrevious ? ' attach-previous' : ''}${attachNext ? ' attach-next' : ''}`}>
-            <PictureOrSpacer/>
+            <PictureOrSpacer />
             <div className={`content-x${isMine ? ' right' : ''}${attachPrevious ? ' attach-previous' : ''}${attachNext ? ' attach-next' : ''}`}>
                 <div className={`${getBubbleClass()}${getBubble()}${attachPrevious ? ' attach-previous' : ''}${attachNext ? ' attach-next' : ''}`}>
-                    <Content/>
+                    <Content />
                 </div>
                 <Details side={isMine ? 'right' : 'left'} />
             </div>

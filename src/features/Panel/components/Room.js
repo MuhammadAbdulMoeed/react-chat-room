@@ -37,6 +37,7 @@ const Room = ({room}) => {
     }
 
     const title = (room.isGroup ? room.title : `${other.firstName} ${other.lastName}`).substr(0, 22);
+    const role = (room.isGroup ? room.user_type : `${other.user_type}`);
 
     let lastMessage = room.lastMessage;
     let text = '';
@@ -125,11 +126,11 @@ const Room = ({room}) => {
                 <div className="profile">
                     <Picture user={other} group={room.isGroup} picture={room.picture} title={room.title} />
                 </div>
-                {getStatus() && <div className={`dot ${getStatus()}`} />}
+                {getStatus() ?  <div className={`dot ${getStatus()}`} /> : <div className={`dot ${getStatus()}`} />}
             </div>
             <div className="text">
                 <div className={`title${roomsWithNewMessages.includes(room._id) ? ' highlight' : ''}`}>
-                    {title.substr(0, 20)}{title.length > 20 && '...'}{roomsWithNewMessages.includes(room._id) ? ` (${roomsWithNewMessages.filter(r => room._id === r).length})` : ''}
+                    {title.substr(0, 20)+ ' (' + role + ' )'}{title.length > 20 && '...'}{roomsWithNewMessages.includes(room._id) ? ` (${roomsWithNewMessages.filter(r => room._id === r).length})` : ''}
                 </div>
                 <div className={`message${roomsWithNewMessages.includes(room._id) ? ' highlight' : ''}`}>
                     {text.substr(0, 26)}{text.length > 26 && '...'}

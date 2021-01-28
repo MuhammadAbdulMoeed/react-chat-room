@@ -63,7 +63,7 @@ const App = () => {
         const route = splitPath[1];
         const token = splitPath[2];
         if (route === 'login' && token && token.length > 20) {
-            setLoading(false);
+            // setLoading(false);
             let decoded;
             console.log(route, token);
             try {
@@ -87,7 +87,7 @@ const App = () => {
             }
         }
         else if(route === 'login'){
-            window.location = "http://ourwork.20thfloor.us/SRH/signin";
+            window.location = "https://www.schoolroomhelp.com/signin";
         }
         window.loaded = true
     }

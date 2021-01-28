@@ -1,26 +1,37 @@
-import React ,{useState , createStore} from "react";
+import React, { useState, createStore } from "react";
 import './Info.sass';
 import logo from '../../../assets/logo.png';
 import Config from '../../../config';
-import {setGlobal, useGlobal} from "reactn";
+import { setGlobal, useGlobal } from "reactn";
 import getSchool from "../../../actions/getSchool";
 
 const Info = () => {
     const version = useGlobal('version')[0];
- 
-    const getSchoolData = async () =>{ await getSchool('getInfo');}
+    const [schoolData, setSchoolData] = useState(null)
+    const [hasSchoolData, setHasSchoolData] = useState(false)
+    if (!hasSchoolData) {
+        getSchool('getInfo').then(data => {
+            setSchoolData(data.data[0]);
+            setHasSchoolData(true);
+        })
+    }
+
+
+    function isValidUrl(url) {
+        let regEx = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/gm;
+        return regEx.test(url);
+    }
 
     return (
         <div className="info">
-            <div className="top">
+            {schoolData && schoolData.name && <div className="top">
                 <div className="logo">
-                    <img src={logo} alt="Picture" />
+                    <img src={isValidUrl('schoolData.logo') ? schoolData.logo : logo} alt="Picture" />
                 </div>
                 <div className="text">
-                    Welcome to !<br/><br/>
-                    {Config.appName || 'Ivy Chat'} is a messaging platform.
+                    Welcome to <br />{schoolData.name}
                 </div>
-            </div>
+            </div>}
             <div className="text">
                 Copyright &copy; {Config.brand || 'IvyLab Technologies'}<br />
                 v{version}

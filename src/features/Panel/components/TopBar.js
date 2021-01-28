@@ -21,8 +21,8 @@ const TopBar = () => {
     const setVideo = useGlobal('video')[1];
     const setCallDirection = useGlobal('callDirection')[1];
 
-    const honeyside = () => window.open("https://www.honeyside.it", "_blank");
-    const codeCanyon = () => window.open("https://codecanyon.net/item/clover-realtime-messaging-audio-video-conferencing-web-app-nodejs-react-webrtc-socketio/25737452", "_blank");
+    const honeyside = () => window.open("https://www.google.com", "_blank");
+    const codeCanyon = () => window.open("https://www.google.com", "_blank");
 
     const history = useHistory();
     const location = useLocation();
@@ -38,7 +38,7 @@ const TopBar = () => {
             appearance: 'success',
             autoDismiss: true,
         })
-        window.location.href = "http://ourwork.20thfloor.us/SRH/signin";
+        window.location.href = "https://www.schoolroomhelp.com/signin";
         //history.replace("/login");
     };
 
@@ -99,11 +99,11 @@ const TopBar = () => {
 {/*                     <div className="button" onClick={() => setPanel('createGroup')}>
                         <FiPlusCircle/>
                     </div> */}
-                    <div className={`button${nav === 'settings' ? ' active' : ''}`} onClick={() => {
+                    {/* <div className={`button${nav === 'settings' ? ' active' : ''}`} onClick={() => {
                         setNav('settings');
                     }}>
                         <FiSettings/>
-                    </div>
+                    </div> */}
                     <div className="uk-inline">
                         <div className="button" type="button">
                             <FiMoreHorizontal/>
