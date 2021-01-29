@@ -38,7 +38,7 @@ const TopBar = () => {
             appearance: 'success',
             autoDismiss: true,
         })
-        window.location.href = "https://www.schoolroomhelp.com/signin";
+        window.location.href = "https://www.schoolroomhelp.com/auth/chat";
         //history.replace("/login");
     };
 
