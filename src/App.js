@@ -24,6 +24,9 @@ const App = () => {
     const toHome = token && <Redirect to="/" />;
     const toLogin = !token && <Redirect to="/login" />;
 
+    //const redirectURL="https://www.schoolroomhelp.com/signin";
+    const redirectURL="https://www.schoolroomhelp.com/auth/chat";
+
     if (!['dark', 'light'].includes(Config.theme)) Config.theme = 'light';
 
     useEffect(() => {
@@ -92,9 +95,9 @@ const App = () => {
         }
         else if(route === 'login'){
             console.log('called5')
-            window.location = "https://www.schoolroomhelp.com/signin";
+            window.location = redirectURL;
         } else {
-            window.location = "https://www.schoolroomhelp.com/signin";
+            window.location = redirectURL;
         }
         window.loaded = true
     }
