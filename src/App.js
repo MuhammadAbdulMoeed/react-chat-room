@@ -40,6 +40,7 @@ const App = () => {
                 focusCount = 0;
                 io.emit('status', { status: 'online' });
             }
+            console.log('called1')
         }, 1000);
         return () => clearInterval(interval);
     }, [io, token]);
@@ -47,6 +48,7 @@ const App = () => {
     useEffect(() => {
         return () => {
             try {
+                console.log('called2')
                 if (getGlobal().audioStream) getGlobal().audioStream.getTracks().forEach(track => track.stop());
             } catch (e) {
             }
@@ -62,7 +64,9 @@ const App = () => {
         const splitPath = window.location.pathname.split('/');
         const route = splitPath[1];
         const token = splitPath[2];
+        console.log('called3')
         if (route === 'login' && token && token.length > 20) {
+            console.log('called4')
             // setLoading(false);
             let decoded;
             console.log(route, token);
@@ -87,6 +91,9 @@ const App = () => {
             }
         }
         else if(route === 'login'){
+            console.log('called5')
+            window.location = "https://www.schoolroomhelp.com/signin";
+        } else {
             window.location = "https://www.schoolroomhelp.com/signin";
         }
         window.loaded = true
@@ -98,7 +105,6 @@ const App = () => {
                 <Switch>
                     <Route path="/login">
                         {toHome}
-                        {!toHome && <Login />}
                     </Route>
                     <Route path="/">
                         {toLogin}
