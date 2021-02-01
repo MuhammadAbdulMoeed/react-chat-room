@@ -21,10 +21,10 @@ const Welcome = () => {
                 <div className="profile">
                     <Picture user={user}/>
                 </div>
-                <div className="tutorial uk-flex uk-flex-top uk-flex-column uk-flex-center uk-flex-middle">
+                {/* <div className="tutorial uk-flex uk-flex-top uk-flex-column uk-flex-center uk-flex-middle">
                     Search for someone to start a conversation,<br/>
                     Add contacts to your favorites to reach them faster
-                </div>
+                </div> */}
             </div>
             <BottomBar/>
         </div>

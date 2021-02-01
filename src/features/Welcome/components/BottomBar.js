@@ -10,13 +10,14 @@ const BottomBar = () => {
 
     return (
             <div className="bottom-bar uk-flex uk-flex-between uk-flex-middle">
-                <div className="profile">
-
-                </div>
-                <div className="nav">
+                <div className="nav uk-flex uk-flex-between uk-flex-middle">
                     <div className="button">
-                        Develop & Design By 20thFloor Technologies - <a href="https://20thfloor.com">20thFloor</a>
+                        &copy; Copyright 2021 - <a href="https://schoolroomhelp.com" target="_blank">School Room Help</a> | All rights reserved.
                     </div>
+                    <div className="button">
+                        Powered by <a href="https://20thfloor.com" target="_blank">20thFloor Techease</a> since 2002-01-09
+                    </div>
+                    
                 </div>
             </div>
     );

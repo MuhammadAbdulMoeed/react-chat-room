@@ -26,16 +26,16 @@ const Info = () => {
         <div className="info">
             {schoolData && schoolData.name && <div className="top">
                 <div className="logo">
-                    <img src={isValidUrl('schoolData.logo') ? schoolData.logo : logo} alt="Picture" />
+                    <img className="img-fluid" src={isValidUrl('schoolData.logo') ? schoolData.logo : logo} alt="Picture" />
                 </div>
                 <div className="text">
                     Welcome to <br />{schoolData.name}
                 </div>
             </div>}
-            <div className="text">
+            {/* <div className="text">
                 Copyright &copy; {Config.brand || 'IvyLab Technologies'}<br />
                 v{version}
-            </div>
+            </div> */}
         </div>
     );
 };

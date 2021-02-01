@@ -35,8 +35,11 @@ const Room = () => {
     }
 
     const Picture = ({picture, user, group}) => {
+
         if (picture)
             return <img src={`${Config.url || ''}/api/images/${picture.shieldedID}/256`} alt="Picture" />;
+        else if(user.logo)
+            return <img src={user.logo} alt="Picture" />;
         else
             return <div className="img">{ group ? room.title.substr(0, 1) : `${user.firstName.substr(0,1)}${user.lastName.substr(0,1)}`}</div>;
     };
@@ -118,7 +121,7 @@ const Room = () => {
             </div>
             <div className="name" hidden>{room.isGroup ? room.title : `${other.firstName} ${other.lastName}`}</div>
             <div className="title" hidden>{other.tagLine || 'No Tag Line'}</div>
-            <button className="details-button uk-margin-remove-bottom uk-button uk-button-secondary" onClick={() => setViewMembers(!viewMembers)}>View {viewMembers ? 'Images' : 'Members'}</button>
+            {/* <button className="details-button uk-margin-remove-bottom uk-button uk-button-secondary" onClick={() => setViewMembers(!viewMembers)}>View {viewMembers ? 'Images' : 'Members'}</button> */}
             {viewMembers && <Members/>}
             <div className="images" ref={scrollContainer} onScroll={onScroll} hidden={viewMembers}>
                 {open && (

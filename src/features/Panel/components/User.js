@@ -35,10 +35,15 @@ const Room = ({user}) => {
             <div className="text">
                 <div className="title">{title}{title.length > 22 && '...'}</div>
             </div>
-            <div className="controls" hidden={hover}>
+{/*             <div className="controls" hidden={hover}>
                 <div className="date">@{user.username}</div>
             </div>
             <div className="controls" hidden={!hover}>
+                <div className="button">
+                    <FiMessageSquare/>
+                </div>
+            </div> */}
+            <div className="controls">
                 <div className="button">
                     <FiMessageSquare/>
                 </div>
