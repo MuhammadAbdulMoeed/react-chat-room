@@ -25,7 +25,7 @@ const App = () => {
     const toLogin = !token && <Redirect to="/login" />;
 
     //const redirectURL="https://www.schoolroomhelp.com/signin";
-    const redirectURL="https://www.schoolroomhelp.com/auth/chat";
+    const redirectURL="https://beta.schoolroomhelp.com/signin";
 
     if (!['dark', 'light'].includes(Config.theme)) Config.theme = 'light';
 
@@ -76,7 +76,9 @@ const App = () => {
             try {
                 decoded = jwtDecode(token);
                 console.log(decoded);
-                if (typeof decoded !== 'object' || typeof decoded.id !== 'string') return;
+                if (typeof decoded !== 'object' || typeof decoded.id !== 'string'){
+                    return
+                };
                 setAuthToken(token);
                 localStorage.setItem('token', token);
                 localStorage.setItem('user', JSON.stringify(decoded));
@@ -96,9 +98,10 @@ const App = () => {
         else if(route === 'login'){
             console.log('called5')
             window.location = redirectURL;
-        } else {
-            window.location = redirectURL;
         }
+        //  else {
+        //     window.location = redirectURL;
+        // }
         window.loaded = true
     }
 
