@@ -10,6 +10,11 @@ import {useSelector} from "react-redux";
 import Config from "../../../config";
 
 const TopBar = () => {
+    const baseURL="https://beta.schoolroomhelp.com";
+    const signinURL=baseURL+"/signin";
+    const studentDashboardURL=baseURL+"/student-dashboard";
+    const schoolDashboardURL=baseURL+"/school-dashboard";
+
     const onlineUsers = useSelector(state => state.io.onlineUsers);
     const io = useSelector(state => state.io.io);
     const [nav, setNav] = useGlobal('nav');
@@ -21,14 +26,12 @@ const TopBar = () => {
     const setVideo = useGlobal('video')[1];
     const setCallDirection = useGlobal('callDirection')[1];
 
-    const honeyside = () => window.open("https://www.google.com", "_blank");
-    const codeCanyon = () => window.open("https://www.google.com", "_blank");
-
     const history = useHistory();
     const location = useLocation();
     const { addToast } = useToasts();
 
     const logout = async () => {
+        let role=localStorage.getItem("user_role",null);
         io.disconnect();
         const username = user.username;
         localStorage.removeItem('token');
@@ -38,8 +41,17 @@ const TopBar = () => {
             appearance: 'success',
             autoDismiss: true,
         })
-        window.location.href = "https://www.schoolroomhelp.com/auth/chat";
-        //history.replace("/login");
+        if(role){
+            if(role="student"){
+                console.log("Role:Student");
+                window.location=studentDashboardURL;
+            }else if(role="admin"){
+                console.log("Role:Admin");
+                window.location=schoolDashboardURL;
+            }
+        }else{
+            window.location=signinURL;
+        }
     };
 
     const errorToast = content => {

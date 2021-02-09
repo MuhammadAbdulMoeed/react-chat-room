@@ -35,6 +35,12 @@ const init = async () => {
             status=res.status;
             console.log('status code',status);
             result = res.data;
+            if(status==200){
+                if(result.user_type){
+                    console.log("User Role",result.user_type);
+                    localStorage.setItem("user_role",result.user_type);
+                }
+            }
         } catch (e) {
             console.log(e);
             result = null;
@@ -45,6 +51,7 @@ const init = async () => {
         if (!result || result.error) {
             localStorage.removeItem("token");
             localStorage.removeItem("user");
+            localStorage.removeItem("user_role");
             token = localStorage.getItem('token');
             userString = localStorage.getItem('user');
             user = userString ? JSON.parse(userString) : null;
