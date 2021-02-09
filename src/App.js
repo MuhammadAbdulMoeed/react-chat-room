@@ -102,14 +102,16 @@ const App = () => {
         }
         else{
             console.log("Route Not Found")
-            var token_local=localStorage.getItem(token);
+            var token_local=localStorage.getItem('token',null);
+            console.log('Checking Token');
             if(!token_local){
                 console.log('Token not available');
                 console.log("Redirecting to SRH Login Page")
                 window.location=redirectURL;
             }else{
-                console.log('Token available',token_local);
-                console.log("Redirecting to Home")
+                console.log('Token available');
+                console.log("Redirecting to Home");
+                // history.push('/');
             }
         }
 
