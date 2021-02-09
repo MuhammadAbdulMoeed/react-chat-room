@@ -31,7 +31,7 @@ const TopBar = () => {
     const { addToast } = useToasts();
 
     const logout = async () => {
-        let role=localStorage.getItem("user_role",null);
+        let role=user.user_type;
         io.disconnect();
         const username = user.username;
         localStorage.removeItem('token');
