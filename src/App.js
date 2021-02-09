@@ -67,38 +67,86 @@ const App = () => {
         const splitPath = window.location.pathname.split('/');
         const route = splitPath[1];
         const token = splitPath[2];
-        console.log('called3')
-        if (route === 'login' && token && token.length > 20) {
-            console.log('called4')
-            // setLoading(false);
-            let decoded;
-            console.log(route, token);
-            try {
-                decoded = jwtDecode(token);
-                console.log(decoded);
-                if (typeof decoded !== 'object' || typeof decoded.id !== 'string'){
-                    return
-                };
-                setAuthToken(token);
-                localStorage.setItem('token', token);
-                localStorage.setItem('user', JSON.stringify(decoded));
-                setGlobal({
-                    user: decoded,
-                    token,
-                }).then(() => {
-                    dispatch(initIO(token));
-                });
-            } catch (e) {
-                addToast("Invalid token provided in URL. You can still login manually.", {
-                    appearance: 'error',
-                    autoDismiss: true,
-                });
-            }
-        }
-        else if(route === 'login'){
-            console.log('called5')
+        console.log('Loaded');
+
+        if(route === 'login' && !token){
+            console.log('Route Login')
             window.location = redirectURL;
         }
+        else if (route === 'login' && token && token.length > 20) {
+            console.log("Route Login and Token")
+            let decoded;
+            try {
+                        decoded = jwtDecode(token);
+                        console.log('User',decoded);
+                        if (typeof decoded !== 'object' || typeof decoded.id !== 'string'){
+                            return
+                        };
+                        setAuthToken(token);
+                        localStorage.setItem('token', token);
+                        localStorage.setItem('user', JSON.stringify(decoded));
+                        setGlobal({
+                            user: decoded,
+                            token,
+                        }).then(() => {
+                            dispatch(initIO(token));
+                        });
+                        console.log("Login Successfully")
+                        console.log("Redirecting to Home")
+                    } catch (e) {
+                        addToast("Invalid token provided in URL. You can still login manually.", {
+                            appearance: 'error',
+                            autoDismiss: true,
+                        });
+                    }
+        }
+        else{
+            console.log("Route Not Found")
+            var token_local=localStorage.getItem(token);
+            if(!token_local){
+                console.log('Token not available');
+                console.log("Redirecting to SRH Login Page")
+                window.location=redirectURL;
+            }else{
+                console.log('Token available',token_local);
+                console.log("Redirecting to Home")
+            }
+        }
+
+
+
+
+        // if (route === 'login' && token && token.length > 20) {
+        //     console.log('called4')
+        //     // setLoading(false);
+        //     let decoded;
+        //     console.log(route, token);
+        //     try {
+        //         decoded = jwtDecode(token);
+        //         console.log(decoded);
+        //         if (typeof decoded !== 'object' || typeof decoded.id !== 'string'){
+        //             return
+        //         };
+        //         setAuthToken(token);
+        //         localStorage.setItem('token', token);
+        //         localStorage.setItem('user', JSON.stringify(decoded));
+        //         setGlobal({
+        //             user: decoded,
+        //             token,
+        //         }).then(() => {
+        //             dispatch(initIO(token));
+        //         });
+        //     } catch (e) {
+        //         addToast("Invalid token provided in URL. You can still login manually.", {
+        //             appearance: 'error',
+        //             autoDismiss: true,
+        //         });
+        //     }
+        // }
+        // else if(route === 'login'){
+        //     console.log('called5')
+        //     window.location = redirectURL;
+        // }
         //  else {
         //     window.location = redirectURL;
         // }

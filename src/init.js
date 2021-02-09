@@ -11,9 +11,9 @@ const init = async () => {
         e.preventDefault();
     });
 
-    if (localStorage.getItem('app') !== 'Clover 2.x.x') {
+    if (localStorage.getItem('app') !== 'SRH Chat 1.0.0') {
         localStorage.clear();
-        localStorage.setItem('app', 'Clover 2.x.x');
+        localStorage.setItem('app', 'SRH Chat 1.0.0');
     }
 
     let token = localStorage.getItem('token');
@@ -24,18 +24,24 @@ const init = async () => {
         const decoded = jwtDecode(token);
 
         let result;
-
+        let status
         try {
             const res = await axios({
                 method: "post",
                 url: (Config.url || '') + "/api/check-user",
                 data: {id: decoded.id},
             });
+            console.log('Check User Response',res);
+            status=res.status;
+            console.log('status code',status);
             result = res.data;
         } catch (e) {
+            console.log(e);
             result = null;
         }
-
+        if(status==404){
+            console.log("User not authorized");
+        }
         if (!result || result.error) {
             localStorage.removeItem("token");
             localStorage.removeItem("user");
