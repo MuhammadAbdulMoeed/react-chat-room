@@ -42,10 +42,10 @@ const TopBar = () => {
             autoDismiss: true,
         })
         if(role){
-            if(role="Student"){
+            if(role=="Student"){
                 console.log("Role:Student");
                 window.location=studentDashboardURL;
-            }else if(role="School Admin"){
+            }else if(role=="School Admin"){
                 console.log("Role:Admin");
                 window.location=schoolDashboardURL;
             }
